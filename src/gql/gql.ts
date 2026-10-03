@@ -14,10 +14,18 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query Issues {\n    issues {\n      id\n      title\n      description\n      status\n      priority\n      assignee\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.IssuesDocument,
+    "\n  fragment IssueFields on Issue {\n    __typename\n    id\n    title\n    description\n    status\n    priority\n    assignee\n    createdAt\n    updatedAt\n  }\n": typeof types.IssueFieldsFragmentDoc,
+    "\n  query Issues {\n    issues {\n      ...IssueFields\n    }\n  }\n": typeof types.IssuesDocument,
+    "\n  mutation CreateIssue($input: CreateIssueInput!) {\n    createIssue(input: $input) {\n      ...IssueFields\n    }\n  }\n": typeof types.CreateIssueDocument,
+    "\n  mutation UpdateIssue($id: ID!, $input: UpdateIssueInput!) {\n    updateIssue(id: $id, input: $input) {\n      ...IssueFields\n    }\n  }\n": typeof types.UpdateIssueDocument,
+    "\n  mutation DeleteIssue($id: ID!) {\n    deleteIssue(id: $id)\n  }\n": typeof types.DeleteIssueDocument,
 };
 const documents: Documents = {
-    "\n  query Issues {\n    issues {\n      id\n      title\n      description\n      status\n      priority\n      assignee\n      createdAt\n      updatedAt\n    }\n  }\n": types.IssuesDocument,
+    "\n  fragment IssueFields on Issue {\n    __typename\n    id\n    title\n    description\n    status\n    priority\n    assignee\n    createdAt\n    updatedAt\n  }\n": types.IssueFieldsFragmentDoc,
+    "\n  query Issues {\n    issues {\n      ...IssueFields\n    }\n  }\n": types.IssuesDocument,
+    "\n  mutation CreateIssue($input: CreateIssueInput!) {\n    createIssue(input: $input) {\n      ...IssueFields\n    }\n  }\n": types.CreateIssueDocument,
+    "\n  mutation UpdateIssue($id: ID!, $input: UpdateIssueInput!) {\n    updateIssue(id: $id, input: $input) {\n      ...IssueFields\n    }\n  }\n": types.UpdateIssueDocument,
+    "\n  mutation DeleteIssue($id: ID!) {\n    deleteIssue(id: $id)\n  }\n": types.DeleteIssueDocument,
 };
 
 /**
@@ -37,7 +45,23 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query Issues {\n    issues {\n      id\n      title\n      description\n      status\n      priority\n      assignee\n      createdAt\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  query Issues {\n    issues {\n      id\n      title\n      description\n      status\n      priority\n      assignee\n      createdAt\n      updatedAt\n    }\n  }\n"];
+export function graphql(source: "\n  fragment IssueFields on Issue {\n    __typename\n    id\n    title\n    description\n    status\n    priority\n    assignee\n    createdAt\n    updatedAt\n  }\n"): (typeof documents)["\n  fragment IssueFields on Issue {\n    __typename\n    id\n    title\n    description\n    status\n    priority\n    assignee\n    createdAt\n    updatedAt\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Issues {\n    issues {\n      ...IssueFields\n    }\n  }\n"): (typeof documents)["\n  query Issues {\n    issues {\n      ...IssueFields\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateIssue($input: CreateIssueInput!) {\n    createIssue(input: $input) {\n      ...IssueFields\n    }\n  }\n"): (typeof documents)["\n  mutation CreateIssue($input: CreateIssueInput!) {\n    createIssue(input: $input) {\n      ...IssueFields\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateIssue($id: ID!, $input: UpdateIssueInput!) {\n    updateIssue(id: $id, input: $input) {\n      ...IssueFields\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateIssue($id: ID!, $input: UpdateIssueInput!) {\n    updateIssue(id: $id, input: $input) {\n      ...IssueFields\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation DeleteIssue($id: ID!) {\n    deleteIssue(id: $id)\n  }\n"): (typeof documents)["\n  mutation DeleteIssue($id: ID!) {\n    deleteIssue(id: $id)\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

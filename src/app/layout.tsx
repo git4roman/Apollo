@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import { ApolloWrapper } from "@/lib/apollo-wrapper";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="...keep your existing classes...">
         <ApolloWrapper>{children}</ApolloWrapper>
+        <Toaster />
       </body>
     </html>
   );
