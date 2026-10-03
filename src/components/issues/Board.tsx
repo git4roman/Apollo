@@ -1,9 +1,9 @@
 "use client";
 
-import { useQuery } from "@apollo/client/react";
 import { ISSUES_QUERY } from "@/graphql/issues";
 import { STATUS_ORDER } from "@/lib/issue-meta";
-import { BoardColumn } from "./BoardColumn";
+import { useQuery } from "@apollo/client/react";
+import { BoardColumn } from "../BoardColumn";
 import { BoardError } from "./BoardError";
 import { BoardSkeleton } from "./BoardSkeleton";
 
@@ -29,7 +29,9 @@ export function Board() {
   }
 
   if (error && !loading) {
-    return <BoardError message={error.message} onRetry={() => void refetch()} />;
+    return (
+      <BoardError message={error.message} onRetry={() => void refetch()} />
+    );
   }
 
   return <BoardSkeleton />;
