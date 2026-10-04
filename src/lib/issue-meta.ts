@@ -11,7 +11,7 @@ export const STATUS_LABEL: Record<Status, string> = {
   IN_PROGRESS: "In progress",
   DONE: "Done",
 };
-
+export const PRIORITY_ORDER: Priority[] = ["LOW", "MEDIUM", "HIGH", "URGENT"];
 export const PRIORITY_LABEL: Record<Priority, string> = {
   LOW: "Low",
   MEDIUM: "Medium",
