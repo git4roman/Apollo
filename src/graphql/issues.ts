@@ -19,8 +19,8 @@ export const ISSUE_FIELDS = graphql(`
 `);
 
 export const ISSUES_QUERY = graphql(`
-  query Issues {
-    issues {
+  query Issues($status: Status, $priority: Priority, $search: String) {
+    issues(status: $status, priority: $priority, search: $search) {
       ...IssueFields
     }
   }

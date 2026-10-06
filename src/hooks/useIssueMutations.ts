@@ -8,7 +8,11 @@ import {
   DELETE_ISSUE_MUTATION,
   UPDATE_ISSUE_MUTATION,
 } from "@/graphql/issues";
-import { addIssueToLists, removeIssueFromLists } from "@/lib/cache-updates";
+import {
+  addIssueToLists,
+  reconcileIssueInLists,
+  removeIssueFromLists,
+} from "@/lib/cache-updates";
 import { STATUS_LABEL, type Issue } from "@/lib/issue-meta";
 
 // Create: the new issue is not in any cached list yet, so we add it ourselves.
@@ -24,7 +28,11 @@ export function useCreateIssue() {
 // so Apollo finds `Issue:<id>` in the cache and overwrites it. Every screen
 // showing that issue re-renders on its own.
 export function useUpdateIssue() {
-  return useMutation(UPDATE_ISSUE_MUTATION);
+  return useMutation(UPDATE_ISSUE_MUTATION, {
+    update(cache, { data }) {
+      if (data) reconcileIssueInLists(cache, data.updateIssue);
+    },
+  });
 }
 
 // Move: same mutation, but we tell Apollo what the server will probably say

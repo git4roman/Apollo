@@ -1,5 +1,6 @@
 import type { ApolloCache, Reference } from "@apollo/client";
 import type { IssueFieldsFragment } from "@/gql/graphql";
+import { matchesIssueFilters, type IssueFilters } from "./filters";
 
 // Put a newly created issue at the top of the cached `issues` list.
 //
@@ -12,12 +13,39 @@ export function addIssueToLists(
 ): void {
   cache.modify({
     fields: {
-      issues(existing: readonly Reference[] = [], { toReference }) {
+      issues(existing: readonly Reference[] = [], details) {
+        const { toReference } = details;
+        const args = (details as typeof details & { args?: IssueFilters }).args;
+        if (!matchesIssueFilters(issue, (args ?? {}) as IssueFilters)) {
+          return existing;
+        }
         const ref = toReference(issue);
         if (!ref) return existing;
         // Guard against adding the same issue twice.
         if (existing.some((item) => item.__ref === ref.__ref)) return existing;
         return [ref, ...existing];
+      },
+    },
+  });
+}
+
+export function reconcileIssueInLists(
+  cache: ApolloCache,
+  issue: IssueFieldsFragment,
+): void {
+  cache.modify({
+    fields: {
+      issues(existing: readonly Reference[] = [], details) {
+        const { readField, toReference } = details;
+        const args = (details as typeof details & { args?: IssueFilters }).args;
+        const ref = toReference(issue);
+        if (!ref) return existing;
+        const withoutIssue = existing.filter(
+          (item) => readField("id", item) !== issue.id,
+        );
+        return matchesIssueFilters(issue, (args ?? {}) as IssueFilters)
+          ? [ref, ...withoutIssue]
+          : withoutIssue;
       },
     },
   });

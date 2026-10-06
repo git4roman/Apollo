@@ -1,5 +1,6 @@
 import { Board } from "@/components/issues/Board";
 import { NewIssueButton } from "@/components/issues/NewIssueButton";
+import { FilterBar } from "@/components/issues/FilterBar";
 
 export default function HomePage() {
   return (
@@ -13,6 +14,7 @@ export default function HomePage() {
         </div>
         <NewIssueButton />
       </header>
+      <FilterBar />
       <Board />
     </main>
   );

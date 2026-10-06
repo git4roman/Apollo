@@ -3,14 +3,17 @@
 import { ISSUES_QUERY } from "@/graphql/issues";
 import { STATUS_ORDER } from "@/lib/issue-meta";
 import { useQuery } from "@apollo/client/react";
+import { useIssueQueryVariables } from "@/hooks/useIssueQueryVariables";
 import { BoardColumn } from "../BoardColumn";
 import { BoardError } from "./BoardError";
 import { BoardSkeleton } from "./BoardSkeleton";
 
 export function Board() {
+  const variables = useIssueQueryVariables();
   // `ssr: false`: skip the server render and fetch in the browser, so the
   // server sends the loading skeleton and the browser fills in the data.
   const { data, loading, error, refetch } = useQuery(ISSUES_QUERY, {
+    variables,
     ssr: false,
   });
 
