@@ -1,6 +1,6 @@
 import type { Status } from "@/gql/graphql";
 import { STATUS_LABEL, type Issue } from "@/lib/issue-meta";
-import { IssueCard } from "./IssueCard";
+import { IssueCard } from "./issues/IssueCard";
 import { StatusBadge } from "./StatusBadge";
 
 interface BoardColumnProps {

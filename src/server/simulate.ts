@@ -9,7 +9,9 @@ export function simulateLatency(): Promise<void> {
 }
 
 export function assertNoForcedFailure(title: string): void {
-  if (title.toLowerCase().includes("fail")) {
+  // Keep the demo failure deterministic without rejecting legitimate titles
+  // that merely contain words such as "failing" or "failure".
+  if (title.trim().toLowerCase() === "fail") {
     throw new GraphQLError("Simulated server failure", {
       extensions: { code: "SIMULATED_FAILURE" },
     });

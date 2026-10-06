@@ -1,6 +1,6 @@
 "use client";
 
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, Pencil } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +23,15 @@ export function IssueActions({ issue }: { issue: Issue }) {
 
   return (
     <>
+      <Button
+        variant="ghost"
+        size="icon-sm"
+        aria-label={`Edit ${issue.title}`}
+        title="Edit issue details"
+        onClick={() => setEditOpen(true)}
+      >
+        <Pencil aria-hidden="true" />
+      </Button>
       {/* modal={false} lets the dialogs below take focus cleanly once the
           menu closes. */}
       <DropdownMenu modal={false}>
@@ -37,7 +46,7 @@ export function IssueActions({ issue }: { issue: Issue }) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onSelect={() => setEditOpen(true)}>
-            Edit
+            Edit details
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuLabel>Move to</DropdownMenuLabel>

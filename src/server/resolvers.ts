@@ -65,7 +65,11 @@ export const resolvers = {
 
       if (args.input.title != null) assertValidTitle(args.input.title);
 
-      assertNoForcedFailure(args.input.title ?? existing.title);
+      // Only a newly submitted title can trigger the demo failure hook. An
+      // existing title containing "fail" must not make unrelated edits fail.
+      if (args.input.title != null) {
+        assertNoForcedFailure(args.input.title);
+      }
 
       const updated = patchIssue(args.id, args.input);
       if (!updated) throw notFound(args.id);
