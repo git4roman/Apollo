@@ -1,4 +1,5 @@
 import type { Issue } from "@/lib/issue-meta";
+import Link from "next/link";
 import { PriorityBadge } from "../PriorityBadge";
 import { IssueActions } from "./IssueActions";
 
@@ -6,7 +7,11 @@ export function IssueCard({ issue }: { issue: Issue }) {
   return (
     <article className="bg-card text-card-foreground hover:border-foreground/30 rounded-lg border p-3 shadow-sm transition-colors">
       <div className="flex items-start justify-between gap-2">
-        <h3 className="text-sm leading-snug font-medium">{issue.title}</h3>
+        <h3 className="text-sm leading-snug font-medium">
+          <Link className="hover:underline" href={`/issues/${issue.id}`}>
+            {issue.title}
+          </Link>
+        </h3>
         <IssueActions issue={issue} />
       </div>
       {issue.description && (
